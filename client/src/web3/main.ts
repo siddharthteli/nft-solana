@@ -8,7 +8,7 @@ let feePayer = Keypair.fromSecretKey(
 );
 
 // your program
-let programId = new PublicKey("8FfKRwvdUCKKs63zvz7NK3cEqwQeT2ivkcuy3v9Ypsgn");
+let programId = new PublicKey("GoajUKZ1SjGBVu8uxaBcGJmdzbho7UyR9cyWTw3xz84E");
 
 export  async function main() {
     let connection = new Connection("http://localhost:8899");
@@ -40,9 +40,8 @@ export  async function main() {
 }
 
 main().then(
-    () => process.exit(),
+    () => process.exit?.(-1),
     (err) => {
         console.error(err);
-        process.exit?.(-1);
     }
 );

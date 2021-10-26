@@ -24,10 +24,10 @@ yarn-error.log*
 
 
 #rust target
-program/target/
+/program/target/
 
 #test-ledger
-test-ledger/
+/test-ledger/
 
 #deployed program
 /dist/program/
@@ -36,3 +36,8 @@ test-ledger/
 /client/node_modules/
 client/package.json
 client/package-lock.json
+
+/package-lock
+/package
+/tsconfig
+/yarn

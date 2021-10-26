@@ -24,13 +24,13 @@ yarn-error.log*
 
 
 #rust target
-program/target/
+/program/target/
 
 #test-ledger
-test-ledger/
+/test-ledger/
 
 #deployed program
-dist/program/
+/dist/program/
 
 #node modules
-client/node_modules/
+/client/node_modules/

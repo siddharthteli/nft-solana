@@ -21,3 +21,10 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+#rust target
+/program/target
+
+#test-ledger
+/test-ledger

@@ -144,7 +144,11 @@ async function main() {
   const lamports = await connection.getMinimumBalanceForRentExemption(
     GREETING_SIZE,
   );
+  const greetedAccountcheck = await connection.getAccountInfo(greetedPubkey);
 
+  if(greetedAccountcheck=== null) {
+
+  
   const transaction = new Transaction().add(
     SystemProgram.createAccountWithSeed({
       fromPubkey: feePayer.publicKey,
@@ -159,6 +163,7 @@ async function main() {
   const hash = await sendAndConfirmTransaction(connection, transaction, [
     feePayer,
   ]);
+}
     console.log(`random address: ${randomAccount.publicKey.toBase58()}`);
 
     const instruction = new TransactionInstruction({

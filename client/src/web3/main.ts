@@ -153,7 +153,7 @@ async function main() {
     const instruction = new TransactionInstruction({
         keys: [{pubkey: greetedPubkey, isSigner: false, isWritable: true}],
         programId,
-        data: Buffer.alloc(0), // All instructions are hellos
+        data: Buffer.from(new Uint8Array([1, 2, 3, 4, 5])), // All instructions are hellos
       });
       await sendAndConfirmTransaction(
         connection,

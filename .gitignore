@@ -14,7 +14,7 @@
 # misc
 .DS_Store
 .env.local
-.env.development.local
+.env.development.locals
 .env.test.local
 .env.production.local
 
@@ -24,13 +24,15 @@ yarn-error.log*
 
 
 #rust target
-/program/target/
+program/target/
 
 #test-ledger
-/test-ledger/
+test-ledger/
 
 #deployed program
 /dist/program/
 
 #node modules
 /client/node_modules/
+client/package.json
+client/package-lock.json

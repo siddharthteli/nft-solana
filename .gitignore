@@ -28,3 +28,9 @@ program/target/
 
 #test-ledger
 test-ledger/
+
+#deployed program
+dist/program/
+
+#node modules
+client/node_modules/

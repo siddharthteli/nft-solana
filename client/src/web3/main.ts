@@ -118,7 +118,7 @@ async function main() {
     let connection = new Connection("http://localhost:8899");
     let programId = new PublicKey("GoajUKZ1SjGBVu8uxaBcGJmdzbho7UyR9cyWTw3xz84E");
     let randomAccount = new Keypair();
-    const GREETING_SEED = 'hello123';
+    const GREETING_SEED = 'a';
  
     const greetedPubkey = await PublicKey.createWithSeed(
         feePayer.publicKey,
@@ -129,9 +129,10 @@ async function main() {
   console.log("address of ---"+greetedPubkey);
  
   const greetedAccountcheck = await connection.getAccountInfo(greetedPubkey);
-
+console.log("greetedaccount exist ?--"+JSON.stringify(greetedAccountcheck));
   if(greetedAccountcheck=== null) {
-
+  console.log("Inside if condition");
+  console.log("Value of id"+programId);
   let lamports=918720;
   const transaction = new Transaction().add(
     SystemProgram.createAccountWithSeed({
@@ -140,7 +141,7 @@ async function main() {
       seed: GREETING_SEED,
       newAccountPubkey: greetedPubkey,
       lamports,
-      space: 50,
+      space: 4,
       programId,
     }),
   );

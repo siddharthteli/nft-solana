@@ -17,7 +17,7 @@ use borsh::{BorshDeserialize, BorshSerialize};
 //solana program deploy /home/siddharth/WowLabz/Solana/nft-solana/dist/program/helloworld.so
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct GreetingAccount {
-    pub counter: u32,
+    pub tokenid: u32,
     
 }
  entrypoint!(process_instruction);
@@ -61,7 +61,7 @@ fn process_instruction(
     msg!("program id {:?}", program_id);
     for account in accounts {
         let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
-        greeting_account.counter += 1;
+        greeting_account.tokenid += 1;
         greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
         msg!("accounts {:?}", account);
 

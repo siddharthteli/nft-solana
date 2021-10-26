@@ -24,7 +24,7 @@ yarn-error.log*
 
 
 #rust target
-/program/target
+program/target/
 
 #test-ledger
-/test-ledger
+test-ledger/

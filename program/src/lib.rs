@@ -60,7 +60,11 @@ fn process_instruction(
 ) -> ProgramResult {
     msg!("program id {:?}", program_id);
     for account in accounts {
+        let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
+        greeting_account.counter += 1;
+        greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
         msg!("accounts {:?}", account);
+
     }
     msg!("data {:?}", instruction_data);
     Ok(())

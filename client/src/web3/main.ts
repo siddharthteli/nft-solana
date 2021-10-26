@@ -131,13 +131,15 @@ async function main() {
     let connection = new Connection("http://localhost:8899");
     let programId = new PublicKey("GoajUKZ1SjGBVu8uxaBcGJmdzbho7UyR9cyWTw3xz84E");
     let randomAccount = new Keypair();
-    const GREETING_SEED = 'hello';
+    const GREETING_SEED = 'hello123';
  
     const greetedPubkey = await PublicKey.createWithSeed(
         feePayer.publicKey,
     GREETING_SEED,
     programId,
   );
+
+  console.log("address of ---"+greetedPubkey);
  
   const lamports = await connection.getMinimumBalanceForRentExemption(
     GREETING_SIZE,
@@ -158,26 +160,37 @@ async function main() {
     feePayer,
   ]);
     console.log(`random address: ${randomAccount.publicKey.toBase58()}`);
+
+    const instruction = new TransactionInstruction({
+        keys: [{pubkey: greetedPubkey, isSigner: false, isWritable: true}],
+        programId,
+        data: Buffer.alloc(0), // All instructions are hellos
+      });
+      await sendAndConfirmTransaction(
+        connection,
+        new Transaction().add(instruction),
+        [feePayer],
+      );
   
-    let tx = new Transaction();
-    tx.add(
-      new TransactionInstruction({
-        keys: [
-          {
-            pubkey: feePayer.publicKey,
-            isSigner: true,
-            isWritable: true,
-          },
-          {
-            pubkey: randomAccount.publicKey,
-            isSigner: false,
-            isWritable: true,
-          },
-        ], // account meta, program will receive the same order array
-        data: Buffer.from(new Uint8Array([1, 2, 3, 4, 5])), // data
-        programId: programId,
-      })
-    );
-    console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer])}`);
+    // let tx = new Transaction();
+    // tx.add(
+    //   new TransactionInstruction({
+    //     keys: [
+    //       {
+    //         pubkey: feePayer.publicKey,
+    //         isSigner: true,
+    //         isWritable: true,
+    //       },
+    //       {
+    //         pubkey: randomAccount.publicKey,
+    //         isSigner: false,
+    //         isWritable: true,
+    //       },
+    //     ], // account meta, program will receive the same order array
+    //     data: Buffer.from(new Uint8Array([1, 2, 3, 4, 5])), // data
+    //     programId: programId,
+    //   })
+    // );
+    // console.log(`txhash: ${await connection.sendTransaction(tx, [feePayer])}`);
 
   }

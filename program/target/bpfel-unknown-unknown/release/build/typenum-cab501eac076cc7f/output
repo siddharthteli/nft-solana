@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/home/siddharth/WowLabz/Solana/nft-solana/program/target/bpfel-unknown-unknown/release/build/typenum-cab501eac076cc7f/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/home/siddharth/WowLabz/Solana/nft-solana/program/target/bpfel-unknown-unknown/release/build/typenum-cab501eac076cc7f/out/op.rs

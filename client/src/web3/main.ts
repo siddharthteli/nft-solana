@@ -109,22 +109,9 @@ export async function invoke() {
 
 
 async function main() {
-    class GreetingAccount {
-        counter = 0;
-        constructor(fields: {counter: number} | undefined = undefined) {
-          if (fields) {
-            this.counter = fields.counter;
-          }
-        }
-      }
-      const GreetingSchema = new Map([
-        [GreetingAccount, {kind: 'struct', fields: [['counter', 'u32']]}],
-      ]);
-      const GREETING_SIZE = borsh.serialize(
-        GreetingSchema,
-        new GreetingAccount(),
-      ).length;
-
+  
+     
+     //console.log("SIze greeting"+GREETING_SIZE);
       //
     let feePayer = Keypair.fromSecretKey(
              Uint8Array.from([183, 24, 219, 158, 145, 227, 59, 153, 68, 209, 188, 54, 95, 47, 59, 131, 223, 143, 101, 3, 35, 208, 224, 128, 111, 66, 113, 241, 221, 62, 215, 202, 74, 70, 182, 171, 100, 140, 55, 222, 82, 240, 81, 41, 113, 181, 17, 113, 99, 181, 56, 144, 64, 245, 12, 189, 86, 144, 95, 175, 105, 33, 29, 136]));
@@ -141,14 +128,11 @@ async function main() {
 
   console.log("address of ---"+greetedPubkey);
  
-  const lamports = await connection.getMinimumBalanceForRentExemption(
-    GREETING_SIZE,
-  );
   const greetedAccountcheck = await connection.getAccountInfo(greetedPubkey);
 
   if(greetedAccountcheck=== null) {
 
-  
+  let lamports=918720;
   const transaction = new Transaction().add(
     SystemProgram.createAccountWithSeed({
       fromPubkey: feePayer.publicKey,
@@ -156,7 +140,7 @@ async function main() {
       seed: GREETING_SEED,
       newAccountPubkey: greetedPubkey,
       lamports,
-      space: GREETING_SIZE,
+      space: 50,
       programId,
     }),
   );

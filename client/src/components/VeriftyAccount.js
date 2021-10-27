@@ -17,6 +17,7 @@ export default class VerifyAccount extends React.Component {
 
 
     }
+    //When address field is updated.
     addressUpdate = async (e) => {
 
         this.setState({ address: e.target.value });

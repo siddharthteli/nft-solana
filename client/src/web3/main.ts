@@ -107,7 +107,7 @@ async function main(ipfsaddress: string) {
     data: Buffer.from(borsh.serialize(GreetingSchema, messageAccount)), // All instructions are hellos
   });
 
-  //Waiting for transaction to confirm.
+  //Waiting for transaction to confirm
   const tx_hash=await sendAndConfirmTransaction(
     connection,
     new Transaction().add(instruction),

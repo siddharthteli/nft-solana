@@ -1,7 +1,7 @@
 import { Keypair,SystemProgram,sendAndConfirmTransaction, Transaction, Connection, TransactionInstruction, PublicKey, AccountMeta } from "@solana/web3.js";
 import * as borsh from 'borsh';
 
-export async function invoke(e:number) {
+export async function invoke(e:string) {
   console.log("value of num"+e);
     main(e).then(
         () => process.exit?.(-1),
@@ -14,11 +14,28 @@ export async function invoke(e:number) {
 
 
 
-async function main(e:number) {
+async function main(e:string) {
 
   let num=e;
-  
-     
+  class GreetingAccount {
+    txt:string='';
+    constructor(fields:{txt:string} | undefined=undefined) {
+      if(fields) {
+        this.txt=fields.txt;
+      }
+    }
+  }
+  //
+
+  const GreetingSchema = new Map([
+  [GreetingAccount, {kind: 'struct', fields: [['txt', 'String']]}],
+]);
+
+  const sampleGreeter =new GreetingAccount();
+  sampleGreeter.txt="00000000000000004";
+  const  GREETING_SIZE=borsh.serialize(GreetingSchema,sampleGreeter).length;
+   //
+
      //console.log("SIze greeting"+GREETING_SIZE);
       //
     let feePayer = Keypair.fromSecretKey(
@@ -26,7 +43,7 @@ async function main(e:number) {
     let connection = new Connection("http://localhost:8899");
     let programId = new PublicKey("GoajUKZ1SjGBVu8uxaBcGJmdzbho7UyR9cyWTw3xz84E");
     let randomAccount = new Keypair();
-    const GREETING_SEED = 'kff';
+    const GREETING_SEED = '3';
  
     const greetedPubkey = await PublicKey.createWithSeed(
         feePayer.publicKey,
@@ -41,7 +58,7 @@ console.log("greetedaccount exist ?--"+JSON.stringify(greetedAccountcheck));
   if(greetedAccountcheck=== null) {
   console.log("Inside if condition");
   console.log("Value of id"+programId);
-  let GREETING_SIZE=1;
+ 
   let lamports=await connection.getMinimumBalanceForRentExemption(
     GREETING_SIZE,
   );;
@@ -61,11 +78,12 @@ console.log("greetedaccount exist ?--"+JSON.stringify(greetedAccountcheck));
     );
 }
     console.log(`random address: ${randomAccount.publicKey.toBase58()}`);
-
+    let messageAccount=new GreetingAccount();
+    messageAccount.txt=num;
     const instruction = new TransactionInstruction({
         keys: [{pubkey: greetedPubkey, isSigner: false, isWritable: true}],
         programId,
-        data: Buffer.from(new Uint8Array([1,num])), // All instructions are hellos
+        data: Buffer.from(borsh.serialize(GreetingSchema,messageAccount)), // All instructions are hellos
       });
       console.log("After craeting tx");
       await sendAndConfirmTransaction(

@@ -17,40 +17,10 @@ use borsh::{BorshDeserialize, BorshSerialize};
 //solana program deploy /home/siddharth/WowLabz/Solana/nft-solana/dist/program/helloworld.so
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
 pub struct GreetingAccount {
-    pub id:u8,
+    pub txt:String,
     
 }
  entrypoint!(process_instruction);
-// fn process_instruction(
-//     program_id: &Pubkey,
-//     accounts: &[AccountInfo],
-//     instruction_data: &[u8],
-// ) -> ProgramResult {
-//     msg!("program id {:?}", program_id);
-//     let accounts_iter = &mut accounts.iter();
-//     let account = next_account_info(accounts_iter)?;
-//         msg!("accounts {:?}", account.data.borrow());
-//         if account.owner != program_id {
-//             msg!("Greeted account does not have the correct program id");
-//             return Err(ProgramError::IncorrectProgramId);
-//         }
-//     // let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
-//     // greeting_account.counter += 1;
-//     // greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
-//     // msg!("Greeted {} time(s)!", greeting_account.counter);
-//     // msg!("Testtime(s)!");
-// //     let my_ref=Rc::new(RefCell::new(& mut vec![2]));
-// //    let container= account.data.borrow_mut();
-// //    container.
-//   // let test= my_ref.borrow_mut();
-   
-//    //stest.take();
-//    //test.borrow();
-//   //  *account.data= &mut Rc::new(RefCell::new(&mut  vec![45]));   
-    
-//     msg!("data {:?}", instruction_data);
-//     Ok(())
-// }
 
 
 fn process_instruction(
@@ -60,14 +30,30 @@ fn process_instruction(
 ) -> ProgramResult {
     msg!("program id {:?}", program_id);
     for account in accounts {
-        let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
-        let mut vec=Vec::new();
-        vec.push(1);
-        greeting_account.id = instruction_data[1];
-        greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
-        msg!("accounts {:?}", account);
+     
+    //     let mut greeting_account = GreetingAccount::try_from_slice(&account.data.borrow())?;
+    //     let mut vec=Vec::new();
+    //     vec.push(1);
+    //    // greeting_account.id = instruction_data[1];
+    //     greeting_account.serialize(&mut &mut account.data.borrow_mut()[..])?;
+    //     msg!("accounts {:?}", account);
+    let message = GreetingAccount::try_from_slice(instruction_data).map_err(|err| {
+        msg!("Receiving message as string utf8 failed, {:?}", err);
+        ProgramError::InvalidInstructionData  
+      })?;
+      msg!("Greeting passed to program is {:?}", message);
+  
+      let data = &mut &mut account.data.borrow_mut();
+      msg!("Start save instruction into data");
+      data[..instruction_data.len()].copy_from_slice(&instruction_data);
 
     }
     msg!("data {:?}", instruction_data);
     Ok(())
 }
+
+
+   // let  buf: &[u8] = &[0, 0, 0, 1];
+    // let mut data= buf;
+    // let my_ref=Rc::new(RefCell::new(&mut buf));
+    // account.data= my_ref;

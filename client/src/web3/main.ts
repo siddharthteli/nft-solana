@@ -46,13 +46,13 @@ async function main(ipfsaddress: string) {
   let feePayer = Keypair.fromSecretKey(
     Uint8Array.from([183, 24, 219, 158, 145, 227, 59, 153, 68, 209, 188, 54, 95, 47, 59, 131, 223, 143, 101, 3, 35, 208, 224, 128, 111, 66, 113, 241, 221, 62, 215, 202, 74, 70, 182, 171, 100, 140, 55, 222, 82, 240, 81, 41, 113, 181, 17, 113, 99, 181, 56, 144, 64, 245, 12, 189, 86, 144, 95, 175, 105, 33, 29, 136]));
   //Connecting to local  cluster.
-    let connection = new Connection("http://localhost:8899");
+    let connection = new Connection("https://api.devnet.solana.com");
     //Program id of deployed program .
   let programId = new PublicKey("GoajUKZ1SjGBVu8uxaBcGJmdzbho7UyR9cyWTw3xz84E");
 
   //Random seed to create account with .
-  const GREETING_SEED = '4';
-
+  const GREETING_SEED = '5';
+  console.log("Fee payer "+JSON.stringify(feePayer.publicKey.toBase58()));
   //Initiliaze  new account with seed & owner & payer pre specified .
   //This new account will be used to store all data.
   const greetedPubkey = await PublicKey.createWithSeed(
@@ -108,14 +108,14 @@ async function main(ipfsaddress: string) {
   });
 
   //Waiting for transaction to confirm.
-  await sendAndConfirmTransaction(
+  const tx_hash=await sendAndConfirmTransaction(
     connection,
     new Transaction().add(instruction),
     [feePayer]
 
   );
 
-  console.log("Done...");
+  console.log("Done...+tx_hash----"+tx_hash);
 
 
 }
@@ -126,11 +126,12 @@ export async function verifyAccountInfo(address: string) {
   //Init new pubkey from string type of address.
   let pubkey = new PublicKey(address);
   //connecting to local cluster
-  let connection = new Connection("http://localhost:8899");
+  let connection = new Connection("https://api.devnet.solana.com");
   console.log("Value of address passed to check" + address);
   //getting account Info struct .
   //Will return null if it doesn't exist.
   const greetedAccountcheck = await connection.getAccountInfo(pubkey);
-  return greetedAccountcheck;
+  console.log("Account Info struct---"+JSON.stringify(greetedAccountcheck));
+  return greetedAccountcheck?.data.toString();
 
 }

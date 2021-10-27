@@ -1,0 +1,15 @@
+.container{
+    margin-top: 100px;
+    margin-left: 40%;
+    margin-right: auto;
+    border: 1px black solid;
+    width: max-content;
+}
+
+.wrapper{
+    margin: 20px;
+}
+
+.content-container{
+    text-align: center;
+}

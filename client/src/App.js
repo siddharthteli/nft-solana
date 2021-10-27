@@ -1,6 +1,6 @@
 import React from 'react';
 import {invoke} from './web3/main'
-
+import NftUpload from './components/NftUpload';
 export default class App extends React.Component {
   
 
@@ -22,8 +22,9 @@ export default class App extends React.Component {
   render(props){
     return(
       <div>
-        <input type="text" onChange={this.changed}/>
-        <button onClick={this.click}>Submit</button>
+        {/* <input type="text" onChange={this.changed}/>
+        <button onClick={this.click}>Submit</button> */}
+        <NftUpload/>
       </div>
     )
   }

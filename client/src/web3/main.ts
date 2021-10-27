@@ -2,7 +2,7 @@ import { Keypair,SystemProgram,sendAndConfirmTransaction, Transaction, Connectio
 import * as borsh from 'borsh';
 
 export async function invoke(e:string) {
-  console.log("value of num"+e);
+  console.log("value of ipfsaddress"+e);
     main(e).then(
         () => process.exit?.(-1),
         (err) => {
@@ -14,9 +14,7 @@ export async function invoke(e:string) {
 
 
 
-async function main(e:string) {
-
-  let num=e;
+async function main(ipfsaddress:string) {
   class GreetingAccount {
     txt:string='';
     constructor(fields:{txt:string} | undefined=undefined) {
@@ -78,7 +76,7 @@ async function main(e:string) {
 }
     console.log(`random address: ${randomAccount.publicKey.toBase58()}`);
     let messageAccount=new GreetingAccount();
-    messageAccount.txt=num;
+    messageAccount.txt=ipfsaddress;
     const instruction = new TransactionInstruction({
         keys: [{pubkey: greetedPubkey, isSigner: false, isWritable: true}],
         programId,

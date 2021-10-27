@@ -12,8 +12,6 @@ export async function pushDataToNft(file:File,des:string,title:string) {
     })
 
     console.log("Meta data "+metaData.url);
-
-    //In directly calling main file of client code . (Solana web 3 code )
     await invoke(metaData.url);
 
     

@@ -44,7 +44,7 @@ export default class NftUpload extends React.Component {
                 </div>
 
               <div className="wrapper">
-                  <labe>Des:</labe>
+                  <label>Des:</label>
               <input type="text" onChange={this.titleChanged} />
               </div>
               <div className="wrapper">

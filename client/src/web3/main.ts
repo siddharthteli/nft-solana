@@ -54,7 +54,6 @@ async function main(e:string) {
   console.log("address of ---"+greetedPubkey);
  
   const greetedAccountcheck = await connection.getAccountInfo(greetedPubkey);
-console.log("greetedaccount exist ?--"+JSON.stringify(greetedAccountcheck));
   if(greetedAccountcheck=== null) {
   console.log("Inside if condition");
   console.log("Value of id"+programId);
@@ -96,4 +95,15 @@ console.log("greetedaccount exist ?--"+JSON.stringify(greetedAccountcheck));
       console.log("Done...");
   
 
+  }
+
+
+
+  export async function verifyAccountInfo(address:string) {
+    let pubkey=new PublicKey(address);
+    let connection = new Connection("http://localhost:8899");
+    console.log("Value of address passed to check"+address);
+    const greetedAccountcheck = await connection.getAccountInfo(pubkey);
+    return greetedAccountcheck;
+    
   }

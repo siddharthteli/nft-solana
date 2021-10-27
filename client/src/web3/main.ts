@@ -32,7 +32,7 @@ async function main(e:string) {
 ]);
 
   const sampleGreeter =new GreetingAccount();
-  sampleGreeter.txt="00000000000000004";
+  sampleGreeter.txt="00000000000000000000000000000000000000000000000000000000000000000000000000000000";
   const  GREETING_SIZE=borsh.serialize(GreetingSchema,sampleGreeter).length;
    //
 
@@ -43,7 +43,7 @@ async function main(e:string) {
     let connection = new Connection("http://localhost:8899");
     let programId = new PublicKey("GoajUKZ1SjGBVu8uxaBcGJmdzbho7UyR9cyWTw3xz84E");
     let randomAccount = new Keypair();
-    const GREETING_SEED = '3';
+    const GREETING_SEED = '4';
  
     const greetedPubkey = await PublicKey.createWithSeed(
         feePayer.publicKey,

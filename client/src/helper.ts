@@ -1,5 +1,5 @@
 import {NFTStorage,File} from 'nft.storage';
-
+import {invoke} from './web3/main';
 const apiKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDhBODc1MzgzYzA5NGIzNjYxOTEyNDI4Yzc5YUEwYTA4MkMzN0M4RUIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYzNDcyOTQ3NjY4MywibmFtZSI6InRlc3QifQ.-O6WCaI9RkbXaMKmKlDF3IlodFWm5GyDeNeE2WBzhiU';
 const client=new NFTStorage({token:apiKey});
 
@@ -14,7 +14,7 @@ export async function pushDataToNft(file:File,des:string,title:string) {
     console.log("Meta data "+metaData.url);
 
     //In directly calling main file of client code . (Solana web 3 code )
-  //  await callFromNft(metaData.url);
+    await invoke(metaData.url);
 
     
 
